@@ -176,4 +176,3 @@ In practice, the model directories, training data path, evaluation data path, an
 ## References
 
 - [LLaVA](https://github.com/haotian-liu/LLaVA)
-- [CoVFT](https://github.com/weeknan/CoVFT)
