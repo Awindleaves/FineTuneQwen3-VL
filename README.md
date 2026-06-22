@@ -1,4 +1,4 @@
-# FineTuneQwen3-VL
+# Fine-tuning of Qwen3-VL+CoVFT parameters for multi-task visual question answering(FineTuneQwen3-VL)
 
 FineTuneQwen3-VL is a local fine-tuning and evaluation project built around Qwen3-VL. It is intended for multimodal instruction tuning, CoVFT-style adaptation experiments, and benchmark comparison across different checkpoints. The project follows the LLaVA-style data format and keeps both training and evaluation scripts organized around local paths, which makes it suitable for users who already have their own models, datasets, and server environment.
 
