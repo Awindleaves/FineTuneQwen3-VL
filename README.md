@@ -4,6 +4,30 @@ FineTuneQwen3-VL is a local fine-tuning and evaluation project built around Qwen
 
 In a typical workflow, you prepare local model weights, organize the training data in LLaVA format, choose one of the provided training scripts to produce a checkpoint, and then evaluate either the base model or trained checkpoints with the exported playground benchmarks.
 
+## Quick Start
+
+From a fresh checkout, the recommended order is to create an isolated environment, install the project dependencies, place the model weights under local directories, prepare the training or evaluation data, and then run the corresponding script. The project is designed around explicit local paths, so once the model and data directories are ready, the same commands can be used on an offline server.
+
+```bash
+git clone <your-repo-url>
+cd FineTuneQwen3-VL
+
+conda create -n FTQwen3 python=3.10
+conda activate FTQwen3
+pip install -r requirements.txt
+```
+
+The minimum files you usually prepare are listed below. Training requires the Qwen3-VL model and a LLaVA-style training dataset. CoVFT additionally requires a local text encoder. Evaluation requires exported benchmark files under `playground/data/eval`.
+
+| Item | Default location | Used by |
+| --- | --- | --- |
+| Qwen3-VL base model | `gitted/Qwen3-VL-4B-Instruct` | Training and evaluation |
+| BERT context encoder | `gitted/bert-base-uncased` | CoVFT |
+| Training annotations | `/path/to/llava_finetune/llava_v1_5_mix665k.json` | Training |
+| Training images | `/path/to/llava_finetune` | Training |
+| Evaluation benchmarks | `playground/data/eval` | Evaluation |
+| Trained checkpoints | `checkpoints/<experiment-name>` | Evaluation |
+
 ## Project Layout
 
 The core code lives under `src`. The training entry point is `src/train.py`; the data loader is under `src/data`; CoVFT-related modules are implemented under `src/models`; and evaluation-time model loading and generation are handled under `src/eval`. Common training and evaluation commands are placed under `scripts`. Exported evaluation data is expected under `playground/data/eval`, and training outputs are written to `checkpoints` by default.
@@ -18,17 +42,9 @@ FineTuneQwen3-VL/
 `-- README.md
 ```
 
-## Environment and Models
+## Model Weights
 
-The project depends on common fine-tuning components such as PyTorch, Transformers, PEFT, bitsandbytes, and datasets. A separate conda environment is recommended. The installed `transformers` package must support `Qwen3VLForConditionalGeneration`.
-
-```bash
-conda create -n FTQwen3 python=3.10
-conda activate FTQwen3
-pip install -r requirements.txt
-```
-
-The default local model directories are shown below. The Qwen3-VL directory is used as the main vision-language model, while the BERT directory is used by CoVFT as the context encoder.
+The project expects local model directories rather than remote model identifiers. The Qwen3-VL directory is used as the main vision-language model, while the BERT directory is used by CoVFT as the context encoder. The installed `transformers` package must support `Qwen3VLForConditionalGeneration`.
 
 ```text
 gitted/Qwen3-VL-4B-Instruct
